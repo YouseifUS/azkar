@@ -501,21 +501,18 @@ class _DhikrCard extends StatelessWidget {
           ),
         ],
       ),
-      child: CustomPaint(
-        painter: _CardOrnament(color: colors.accent.withValues(alpha: .45)),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 46, 24, 46),
-          child: Center(
-            child: SingleChildScrollView(
-              child: Text(
-                item.text,
-                textAlign: TextAlign.center,
-                textDirection: TextDirection.rtl,
-                style: TextStyle(
-                  color: colors.text,
-                  fontSize: _fontSize,
-                  height: 1.75,
-                ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 46, 24, 46),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Text(
+              item.text,
+              textAlign: TextAlign.center,
+              textDirection: TextDirection.rtl,
+              style: TextStyle(
+                color: colors.text,
+                fontSize: _fontSize,
+                height: 1.75,
               ),
             ),
           ),
@@ -654,44 +651,6 @@ class _ThemeButton extends StatelessWidget {
       ),
     );
   }
-}
-
-/// A quiet eight-point star and fine rules frame the text without competing
-/// with it. Painting keeps the decoration out of accessibility and hit tests.
-class _CardOrnament extends CustomPainter {
-  const _CardOrnament({required this.color});
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = .8;
-    for (final y in [25.0, size.height - 25]) {
-      final center = Offset(size.width / 2, y);
-      canvas.drawLine(
-        Offset(center.dx - 62, y),
-        Offset(center.dx - 18, y),
-        paint,
-      );
-      canvas.drawLine(
-        Offset(center.dx + 18, y),
-        Offset(center.dx + 62, y),
-        paint,
-      );
-      canvas.save();
-      canvas.translate(center.dx, center.dy);
-      canvas.drawRect(const Rect.fromLTWH(-6, -6, 12, 12), paint);
-      canvas.rotate(.7853981634);
-      canvas.drawRect(const Rect.fromLTWH(-6, -6, 12, 12), paint);
-      canvas.restore();
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _CardOrnament oldDelegate) =>
-      color != oldDelegate.color;
 }
 
 String _arabicDigits(String value) {

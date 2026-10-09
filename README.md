@@ -11,7 +11,7 @@ Azkar is a simple Android app for reading **أذكار الصباح والمسا
 
 ## Download · تحميل التطبيق
 
-**[Download Azkar 1.1.0 for Android (APK)](https://github.com/YouseifUS/azkar/releases/download/v1.1.0/Adhkar-v1.1.0.apk)** · [All releases](https://github.com/YouseifUS/azkar/releases/latest)
+**[Download Azkar 1.1.1 for Android (APK)](https://github.com/YouseifUS/azkar/releases/download/v1.1.1/Adhkar-v1.1.1.apk)** · [All releases](https://github.com/YouseifUS/azkar/releases/latest)
 
 حمّل ملف APK وافتحه على هاتف Android لتثبيت التطبيق. قد تحتاج للسماح بالتثبيت من المتصفح أو مدير الملفات. مستخدمو النسخ السابقة يمكنهم تثبيت التحديث فوق النسخة الحالية.
 
@@ -85,6 +85,10 @@ dart run flutter_launcher_icons
 ```
 
 Bug reports, translations, and pull requests are welcome. Please run the checks above before submitting changes.
+
+## Text review · تدقيق النصوص
+
+[Review notes and references](docs/content-audit.md) document the Arabic wording, punctuation, Quran stop marks, and corrections included in version 1.1.1.
 
 ## Privacy and reminders
 
