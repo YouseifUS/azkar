@@ -1,12 +1,9 @@
 import { arabic, document, fontSize, targetPage } from '../src/model';
 import fs from 'fs';
 import path from 'path';
+import { createHash } from 'crypto';
 
-test('every reviewed Flutter dhikr is preserved byte for byte', () => {
-  const source = path.join(
-    __dirname,
-    '../legacy/flutter/assets/data/adhkar_morning_evening.json',
-  );
+test('every reviewed dhikr is preserved byte for byte', () => {
   const bundled = fs.readFileSync(
     path.join(__dirname, '../assets/data/adhkar_morning_evening.json'),
   );
@@ -20,8 +17,9 @@ test('every reviewed Flutter dhikr is preserved byte for byte', () => {
       )
       .equals(bundled),
   ).toBe(true);
-  if (fs.existsSync(source))
-    expect(fs.readFileSync(source).equals(bundled)).toBe(true);
+  expect(createHash('sha256').update(bundled).digest('hex')).toBe(
+    '6e1025416e7ba968dc6a71a662f269188a745351702b9a923f1229b550c3c88f',
+  );
   for (const period of ['morning', 'evening'] as const) {
     expect(document[period]).toHaveLength(23);
     document[period].forEach((item, index) => {

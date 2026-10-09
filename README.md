@@ -56,9 +56,9 @@ Installable APK: `android/app/build/outputs/apk/release/app-release.apk`. The re
 
 Application ID stays `com.yousefmojahid.adhkar_app`; version is 2.0.0, code 8. This release uses the same existing local Android signing key as Flutter 1.x so installation preserves local data. Keys are ignored and never committed. Build on the original machine with its existing `~/.android/debug.keystore`, or provide `AZKAR_KEYSTORE`, `AZKAR_STORE_PASSWORD`, `AZKAR_KEY_ALIAS`, and `AZKAR_KEY_PASSWORD`. A different key cannot update the distributed 1.x APK in place. Configure a private production key and a signing migration strategy before store distribution.
 
-### Compatibility and archived Flutter source
+### Compatibility with previous installations
 
-The bridge reads and writes the existing `FlutterSharedPreferences` file and `flutter.*` keys directly: counters, theme, coordinates, timezone and last Fajr reset boundary. There is no destructive data conversion. Updates cancel obsolete Flutter reminder intents and background jobs before scheduling the replacement services. All original Flutter code, tests, assets and Android configuration remain under [legacy/flutter](legacy/flutter) for reference and rollback.
+The bridge reads and writes the existing `FlutterSharedPreferences` file and `flutter.*` keys directly: counters, theme, coordinates, timezone and last Fajr reset boundary. There is no destructive data conversion. Updates cancel obsolete reminder intents and background jobs before scheduling the replacement services. These compatibility identifiers are plain Android storage and component names; they do not require a Flutter runtime or SDK. The repository contains only the React Native application, its Android bridge, tests and required assets.
 
 ## Privacy and reminders
 

@@ -1,10 +1,11 @@
 # React Native migration verification
 
-Azkar 2.0.0 (version code 8) replaces the active Flutter implementation with React Native 0.86.3 and TypeScript. Flutter 1.1.2 source is preserved under `legacy/flutter` and is not part of the APK build.
+Azkar 2.0.0 (version code 8) replaces the previous implementation with React Native 0.86.3 and TypeScript. The old Dart/Flutter source, project configuration and archived tests have been removed. Building this repository requires only the React Native and Android toolchains.
 
 ## Preserved behavior and assets
 
 - Canonical morning/evening JSON, 23 entries per period, unchanged byte for byte.
+- A fixed SHA-256 content baseline verifies the reviewed JSON without depending on the removed source archive.
 - Amiri regular/bold font files, licenses, launcher art and notification icon. The original Material Icons font and glyphs are reused for tab, theme and reset icons.
 - Original light/dark semantic colors, dimensions, text-size thresholds, Arabic digits, layout, counter positions and confirmation wording.
 - Separate capped counters, tap-to-count and auto-advance, horizontal RTL browsing and vertical scrolling for long passages.

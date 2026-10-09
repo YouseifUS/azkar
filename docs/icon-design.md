@@ -2,7 +2,7 @@
 
 Final asset: `assets/icon/adhkar_icon.png`.
 
-Created with the built-in image generation tool, using the user's moon and sunrise images as style references. Android launcher variants are generated with `dart run flutter_launcher_icons`. The references themselves are not redistributed in this repository.
+Created with the built-in image generation tool, using the user's moon and sunrise images as style references. Android launcher variants are bundled under `android/app/src/main/res`; no icon-generation package or SDK is required to build the application. The references themselves are not redistributed in this repository.
 
 ## Final generation prompt
 
