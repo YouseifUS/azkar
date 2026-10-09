@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'com.facebook.react'
+react { autolinkLibrariesWithApp() }
+android {
+    ndkVersion rootProject.ext.ndkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk rootProject.ext.compileSdkVersion
+    namespace 'com.yousefmojahid.adhkar_app'
+    defaultConfig {
+        applicationId 'com.yousefmojahid.adhkar_app'
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 8
+        versionName '2.0.0'
+    }
+    signingConfigs {
+        release {
+            storeFile file(System.getenv('AZKAR_KEYSTORE') ?: "${System.getProperty('user.home')}/.android/debug.keystore")
+            storePassword System.getenv('AZKAR_STORE_PASSWORD') ?: 'android'
+            keyAlias System.getenv('AZKAR_KEY_ALIAS') ?: 'androiddebugkey'
+            keyPassword System.getenv('AZKAR_KEY_PASSWORD') ?: 'android'
+        }
+    }
+    buildTypes {
+        debug { signingConfig signingConfigs.release }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+dependencies {
+    implementation 'com.facebook.react:react-android'
+    implementation 'com.facebook.react:hermes-android'
+    implementation 'androidx.work:work-runtime-ktx:2.10.5'
+    implementation 'androidx.core:core-ktx:1.17.0'
+    implementation 'com.batoulapps.adhan:adhan:1.2.1'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.16.1'
+}
+android.testOptions.unitTests.includeAndroidResources = true

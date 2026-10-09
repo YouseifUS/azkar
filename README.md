@@ -1,103 +1,77 @@
-<p align="center">
-  <img src="assets/icon/adhkar_icon.png" width="112" alt="Azkar — a gold sun and crescent on antique green" />
-</p>
-
+<p align="center"><img src="assets/icon/adhkar_icon.png" width="112" alt="Azkar" /></p>
 <h1 align="center">أذكار · Azkar</h1>
-
 <p align="center">A quiet space for morning and evening remembrance.</p>
-<p align="center">Offline · No ads · No accounts · Open source</p>
-
-Azkar is a simple Android app for reading **أذكار الصباح والمساء**. Arabic text, comfortable typography, and a tap-to-count reading experience help you focus on the dhikr.
+<p align="center">React Native · Android · Offline · No ads · No accounts</p>
 
 ## Download · تحميل التطبيق
 
-**[Download Azkar 1.1.2 for Android (APK)](https://github.com/YouseifUS/azkar/releases/download/v1.1.2/Adhkar-v1.1.2.apk)** · [All releases](https://github.com/YouseifUS/azkar/releases/latest)
+**[Download Azkar 2.0.0 for Android (APK)](https://github.com/YouseifUS/azkar/releases/download/v2.0.0/Azkar-v2.0.0.apk)** · [All releases](https://github.com/YouseifUS/azkar/releases)
 
-حمّل ملف APK وافتحه على هاتف Android لتثبيت التطبيق. قد تحتاج للسماح بالتثبيت من المتصفح أو مدير الملفات. مستخدمو النسخ السابقة يمكنهم تثبيت التحديث فوق النسخة الحالية.
+الإصدار الجديد مبني باستخدام React Native وTypeScript، بنفس النصوص وخط Amiri والأيقونة والألوان وواجهة القراءة. يمكنك تثبيته فوق إصدار Flutter 1.1.2 مع الاحتفاظ بالعدادات والوضع المحفوظ. لا تحذف النسخة القديمة قبل تثبيت التحديث.
 
 ## Screenshots
 
-<p align="center">
-  <img src="docs/screenshots/light-morning.png" width="300" alt="Morning adhkar in ivory, antique green and gold light mode" />
-  &nbsp;&nbsp;
-  <img src="docs/screenshots/dark-evening.png" width="300" alt="Evening adhkar in navy and gold dark mode" />
-</p>
-
-<p align="center">Ivory, antique green & gold by day · Navy & gold by night</p>
-
-These captures are rendered directly from the app's Flutter widgets at a phone-sized viewport, with the bundled Amiri font. They are not design mockups.
+<p align="center"><img src="docs/screenshots/light-morning.png" width="300" alt="Morning adhkar in light mode" /> &nbsp; <img src="docs/screenshots/dark-evening.png" width="300" alt="Evening adhkar in dark mode" /></p>
 
 ## Features
 
-- 23 morning and 23 evening adhkar, including complete Quran passages.
-- Light and dark modes. Use the small button **to the right of the counter**; your choice is remembered after reopening the app.
-- A new sun-and-crescent launcher icon that brings morning and evening together.
-- Tap the reading card or the circular counter to count. Completing a dhikr advances to the next one; swipe horizontally to browse.
-- Separate morning/evening counters, saved locally.
-- Automatic daily counter reset at the latest Fajr boundary, with a manual reset button and confirmation.
-- Local reminders 30 minutes after Fajr and Asr, calculated using your device location, with periodic background schedule refresh.
+- 23 morning and 23 evening adhkar with the original reviewed Arabic content, bundled offline.
+- The same Amiri regular/bold fonts, ivory/green/gold light mode and navy/gold dark mode.
+- Tap the card or circular counter to count; completion advances to the next dhikr. Swipe right for the next dhikr and left for the previous one. Long text scrolls vertically.
+- Independent morning/evening counters, capped at each dhikr’s repetition target.
+- Theme button to the right of the counter, reset button with confirmation to the left.
+- Theme and counters persist across reopening and in-place updates from Flutter.
+- Daily reset at the latest local Fajr boundary, while open and upon resume or background refresh.
+- Local reminders 30 minutes after Fajr and Asr, using Egyptian calculation parameters and Shafi Asr.
+- A rolling 14-day reminder schedule, background refresh every 12 hours, and rescheduling after reboot, app update, clock or timezone changes.
+- Permission explanations and an application-settings shortcut. Reading works when location or notifications are declined.
 - No ads, analytics, account, backend, or API key.
 
 ## الاستخدام
 
-اختر أذكار الصباح أو المساء، ثم اضغط على بطاقة الذكر أو العداد للتسبيح. اسحب يمينًا أو يسارًا للتنقل. زر الشمس/الهلال على يمين العداد يبدّل بين الوضعين الفاتح والداكن ويحفظ اختيارك. زر إعادة الضبط على اليسار يصفّر العدادات بعد التأكيد.
+اختر أذكار الصباح أو المساء، واضغط على بطاقة الذكر أو العداد للتسبيح. اسحب يمينًا للذكر التالي ويسارًا للسابق. زر الشمس/الهلال على يمين العداد يغيّر الوضع ويحفظه، وزر إعادة الضبط على اليسار يصفّر العدادات بعد التأكيد. اسمح بالموقع والإشعارات لتفعيل التذكير بعد الفجر والعصر بنصف ساعة.
 
-للتذكير بعد الفجر والعصر بنصف ساعة، اسمح بالموقع والإشعارات عند الإعداد الأول. تُستخدم بيانات الموقع محليًا لحساب المواقيت.
+## Run and build
 
-## Run locally
-
-The current project targets **Android**, with Flutter **3.47.2** / Dart **3.13.2**. Install Flutter and an Android SDK, then connect an Android device or start an emulator:
+Requirements: Node.js 22.11+, JDK 17, Android SDK 36, NDK 27.1.12297006. The application uses React Native 0.86.3 and React 19.2.3, native React Native views with Hermes, and a small Android bridge for storage, local prayer calculation, location and system reminders. Flutter is not part of the active build.
 
 ```sh
-git clone https://github.com/YouseifUS/azkar.git
-cd azkar
-flutter pub get
-flutter run
+npm ci
+npm start
+# Separate terminal, with a connected Android device or emulator:
+npm run android
 ```
 
-To build an installable APK:
+Configure `android/local.properties` with `sdk.dir=/path/to/android-sdk`, or set `ANDROID_HOME`.
 
 ```sh
-flutter build apk --release
+npm run validate
+cd android
+./gradlew testDebugUnitTest assembleRelease
 ```
 
-The APK is generated at `build/app/outputs/flutter-apk/app-release.apk`. The checked-in Android configuration currently uses the local debug signing key for release builds; configure your own release signing before store publication. Keep your signing keys private.
+Installable APK: `android/app/build/outputs/apk/release/app-release.apk`. The release contains the JS bundle, fonts and texts; Metro is not required.
 
-## Verify and contribute
+### Signing and updates
 
-```sh
-flutter analyze
-flutter test
-```
+Application ID stays `com.yousefmojahid.adhkar_app`; version is 2.0.0, code 8. This release uses the same existing local Android signing key as Flutter 1.x so installation preserves local data. Keys are ignored and never committed. Build on the original machine with its existing `~/.android/debug.keystore`, or provide `AZKAR_KEYSTORE`, `AZKAR_STORE_PASSWORD`, `AZKAR_KEY_ALIAS`, and `AZKAR_KEY_PASSWORD`. A different key cannot update the distributed 1.x APK in place. Configure a private production key and a signing migration strategy before store distribution.
 
-Tests cover the adhkar document, prayer calculations, daily resets, permission handling, notification scheduling, reading gestures, counters, theme persistence, and both themes on a small phone.
+### Compatibility and archived Flutter source
 
-Regenerate the README screenshots from the actual UI:
-
-```sh
-flutter test test/screenshots_test.dart --update-goldens --dart-define=GENERATE_SCREENSHOTS=true
-```
-
-Regenerate Android launcher assets after changing the icon:
-
-```sh
-dart run flutter_launcher_icons
-```
-
-Bug reports, translations, and pull requests are welcome. Please run the checks above before submitting changes.
-
-## Text review · تدقيق النصوص
-
-[Review notes and references](docs/content-audit.md) document the Arabic wording, punctuation, ordinary Quran punctuation, and corrections included in version 1.1.2.
+The bridge reads and writes the existing `FlutterSharedPreferences` file and `flutter.*` keys directly: counters, theme, coordinates, timezone and last Fajr reset boundary. There is no destructive data conversion. Updates cancel obsolete Flutter reminder intents and background jobs before scheduling the replacement services. All original Flutter code, tests, assets and Android configuration remain under [legacy/flutter](legacy/flutter) for reference and rollback.
 
 ## Privacy and reminders
 
-Reading and counting work offline. Counters, theme preference, location coordinates, and timezone are stored locally on your device. This app does not send them to a server. Location and notification permissions are used for prayer reminders; reading remains available if you decline them. Delivery can depend on Android notification and battery settings. Font licensing is included in `assets/fonts/OFL.txt`.
+Counters, appearance and coordinates remain on the device. Prayer times are calculated locally; no location is uploaded. Location and notification permissions are used only for reminders. Android battery policies and denied permissions can delay or prevent reminders. Exact alarms are used when Android allows them, otherwise an inexact alarm is scheduled, as in Flutter 1.x.
 
-## Open source · مفتوح المصدر
+## Verification
 
-The code is released under the [MIT License](LICENSE). **Anyone may use, copy, modify, redistribute, or use it commercially**, provided the copyright notice and license are retained. The software is provided without warranty.
+TypeScript checks and React Native component tests cover card/counter interaction, separate periods, reset confirmation, theme persistence, permission setup, Arabic digits, RTL swipe boundaries, fonts and text parity. Android regression tests cover reading Flutter preferences, capped counters, Fajr reset idempotence, offline/permission fallback, and 14-day alarm scheduling. See [migration verification](docs/react-native-migration.md) for this release’s device checks and limitations.
 
-الكود مفتوح المصدر بترخيص MIT، ومتاح لأي شخص للاستخدام والنسخ والتعديل وإعادة التوزيع، حتى تجاريًا، مع الاحتفاظ بإشعار حقوق النشر ونص الترخيص.
+Reviewed text references: [content audit](docs/content-audit.md). Font licenses: [Amiri OFL](assets/fonts/OFL.txt) and [Material Icons Apache license](assets/fonts/MaterialIcons_LICENSE.txt).
+
+## License
+
+[MIT](LICENSE). Anyone may use, copy, modify and redistribute the application, including commercially, while retaining the license and copyright notice.
 
 Copyright © 2026 Yousef Mojahid.
