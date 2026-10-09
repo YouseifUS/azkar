@@ -9,6 +9,12 @@
 
 Azkar is a simple Android app for reading **أذكار الصباح والمساء**. Arabic text, comfortable typography, and a tap-to-count reading experience help you focus on the dhikr.
 
+## Download · تحميل التطبيق
+
+**[Download Azkar 1.1.0 for Android (APK)](https://github.com/YouseifUS/azkar/releases/download/v1.1.0/Adhkar-v1.1.0.apk)** · [All releases](https://github.com/YouseifUS/azkar/releases/latest)
+
+حمّل ملف APK وافتحه على هاتف Android لتثبيت التطبيق. قد تحتاج للسماح بالتثبيت من المتصفح أو مدير الملفات. مستخدمو النسخ السابقة يمكنهم تثبيت التحديث فوق النسخة الحالية.
+
 ## Screenshots
 
 <p align="center">
