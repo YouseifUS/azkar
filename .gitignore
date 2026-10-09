@@ -15,3 +15,10 @@ legacy/flutter/.dart_tool/
 **/.cxx/
 **/.gradle/
 legacy/flutter/android/local.properties
+# Preserve ignore rules for existing Flutter-generated files during local upgrades.
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.idea/
+*.iml
+/build/
