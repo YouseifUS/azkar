@@ -5,7 +5,7 @@
 
 ## Download · تحميل التطبيق
 
-**[Download Azkar 2.0.0 for Android (APK)](https://github.com/YouseifUS/azkar/releases/download/v2.0.0/Azkar-v2.0.0.apk)** · [All releases](https://github.com/YouseifUS/azkar/releases)
+**[Download Azkar 2.1.0 for Android (APK)](https://github.com/YouseifUS/azkar/releases/download/v2.1.0/Azkar-v2.1.0.apk)** · [All releases](https://github.com/YouseifUS/azkar/releases)
 
 الإصدار الجديد مبني باستخدام React Native وTypeScript، بنفس النصوص وخط Amiri والأيقونة والألوان وواجهة القراءة. يمكنك تثبيته فوق إصدار Flutter 1.1.2 مع الاحتفاظ بالعدادات والوضع المحفوظ. لا تحذف النسخة القديمة قبل تثبيت التحديث.
 
@@ -19,6 +19,7 @@
 - The same Amiri regular/bold fonts, ivory/green/gold light mode and navy/gold dark mode.
 - Tap the card or circular counter to count; completion advances to the next dhikr. Swipe right for the next dhikr and left for the previous one. Long text scrolls vertically.
 - Independent morning/evening counters, capped at each dhikr’s repetition target.
+- A checkmark beside each completed period and a “تم ورد اليوم” dialog when all its adhkar are finished. Completion follows the saved counters and clears after reset.
 - Theme button to the right of the counter, reset button with confirmation to the left.
 - Theme and counters persist across reopening and in-place updates from Flutter.
 - Daily reset at the latest local Fajr boundary, while open and upon resume or background refresh.
@@ -29,7 +30,7 @@
 
 ## الاستخدام
 
-اختر أذكار الصباح أو المساء، واضغط على بطاقة الذكر أو العداد للتسبيح. اسحب يمينًا للذكر التالي ويسارًا للسابق. زر الشمس/الهلال على يمين العداد يغيّر الوضع ويحفظه، وزر إعادة الضبط على اليسار يصفّر العدادات بعد التأكيد. اسمح بالموقع والإشعارات لتفعيل التذكير بعد الفجر والعصر بنصف ساعة.
+عند إتمام جميع أذكار الصباح أو المساء تظهر علامة صح بجانب الورد ونافذة «تم ورد اليوم». اختر أذكار الصباح أو المساء، واضغط على بطاقة الذكر أو العداد للتسبيح. اسحب يمينًا للذكر التالي ويسارًا للسابق. زر الشمس/الهلال على يمين العداد يغيّر الوضع ويحفظه، وزر إعادة الضبط على اليسار يصفّر العدادات بعد التأكيد. اسمح بالموقع والإشعارات لتفعيل التذكير بعد الفجر والعصر بنصف ساعة.
 
 ## Run and build
 
@@ -54,7 +55,7 @@ Installable APK: `android/app/build/outputs/apk/release/app-release.apk`. The re
 
 ### Signing and updates
 
-Application ID stays `com.yousefmojahid.adhkar_app`; version is 2.0.0, code 8. This release uses the same existing local Android signing key as Flutter 1.x so installation preserves local data. Keys are ignored and never committed. Build on the original machine with its existing `~/.android/debug.keystore`, or provide `AZKAR_KEYSTORE`, `AZKAR_STORE_PASSWORD`, `AZKAR_KEY_ALIAS`, and `AZKAR_KEY_PASSWORD`. A different key cannot update the distributed 1.x APK in place. Configure a private production key and a signing migration strategy before store distribution.
+Application ID stays `com.yousefmojahid.adhkar_app`; version is 2.1.0, code 9. This release uses the same existing local Android signing key as Flutter 1.x so installation preserves local data. Keys are ignored and never committed. Build on the original machine with its existing `~/.android/debug.keystore`, or provide `AZKAR_KEYSTORE`, `AZKAR_STORE_PASSWORD`, `AZKAR_KEY_ALIAS`, and `AZKAR_KEY_PASSWORD`. A different key cannot update the distributed 1.x APK in place. Configure a private production key and a signing migration strategy before store distribution.
 
 ### Compatibility with previous installations
 

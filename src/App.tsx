@@ -17,7 +17,14 @@ import {
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import Svg, { Circle } from 'react-native-svg';
-import { arabic, colors, document, fontSize, targetPage } from './model';
+import {
+  arabic,
+  colors,
+  document,
+  fontSize,
+  isPeriodComplete,
+  targetPage,
+} from './model';
 import type { Period, Snapshot } from './model';
 import { device, requestPermissions } from './device';
 
@@ -221,6 +228,18 @@ function Home() {
       const next = await device.increment(current.period, dhikr.order);
       apply(next);
       if (
+        !isPeriodComplete(current.period, state[current.period]) &&
+        isPeriodComplete(current.period, next[current.period]) &&
+        live.current
+      ) {
+        showDialog(
+          'تم ورد اليوم',
+          current.period === 'morning'
+            ? 'أتممت جميع أذكار الصباح.'
+            : 'أتممت جميع أذكار المساء.',
+        );
+      }
+      if (
         before < dhikr.repetition &&
         next[current.period][String(dhikr.order)] >= dhikr.repetition &&
         current.period === position.current.period &&
@@ -343,9 +362,13 @@ function Home() {
                 testID={`period-${value}`}
                 accessibilityRole="button"
                 accessibilityState={{ selected: period === value }}
-                accessibilityLabel={
+                accessibilityLabel={`${
                   value === 'morning' ? 'أذكار الصباح' : 'أذكار المساء'
-                }
+                }${
+                  state && isPeriodComplete(value, state[value])
+                    ? '، تم الورد'
+                    : ''
+                }`}
                 onPress={() => select(value)}
                 style={[
                   styles.tab,
@@ -367,6 +390,18 @@ function Home() {
                 >
                   {value === 'morning' ? 'أذكار الصباح' : 'أذكار المساء'}
                 </Text>
+                {state && isPeriodComplete(value, state[value]) && (
+                  <Text
+                    testID={`complete-${value}`}
+                    accessible={false}
+                    style={[
+                      styles.tabCheck,
+                      { color: period === value ? c.onSelected : c.accent },
+                    ]}
+                  >
+                    ✓
+                  </Text>
+                )}
                 <Icon
                   name={value === 'morning' ? 'sun' : 'moon'}
                   size={20}
@@ -598,6 +633,11 @@ const styles = StyleSheet.create({
     writingDirection: 'rtl',
     includeFontPadding: false,
     flexShrink: 1,
+  },
+  tabCheck: {
+    fontSize: 18,
+    lineHeight: 26,
+    includeFontPadding: false,
   },
   pill: {
     alignSelf: 'center',

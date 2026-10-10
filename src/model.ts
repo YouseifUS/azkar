@@ -9,6 +9,10 @@ export type Snapshot = {
   nextFajr: number | null;
 };
 export const document: Record<Period, Dhikr[]> = data;
+export const isPeriodComplete = (period: Period, counts: Counts) =>
+  document[period].every(
+    item => (counts[String(item.order)] ?? 0) >= item.repetition,
+  );
 export const arabic = (n: number) =>
   String(n).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[Number(d)]);
 export const fontSize = (text: string) =>

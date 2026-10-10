@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
-import { NativeModules } from 'react-native';
+import { AppState, NativeModules } from 'react-native';
 import { document } from '../src/model';
 import type { Snapshot } from '../src/model';
 
@@ -129,4 +129,131 @@ test('vertical drag inside the reading card does not increment the dhikr', async
     card.props.onPress();
   });
   expect(saved.morning[1]).toBe(1);
+});
+
+function completeCounts(period: 'morning' | 'evening') {
+  return Object.fromEntries(
+    document[period].map(item => [String(item.order), item.repetition]),
+  );
+}
+
+test.each(['morning', 'evening'] as const)(
+  '%s completion marks only its tab and shows the dialog once, even when the last unfinished dhikr is first',
+  async period => {
+    saved[period] = completeCounts(period);
+    saved[period][1] -= 1;
+    await mount();
+    await press(`period-${period}`);
+    expect(
+      tree.root.findAllByProps({ testID: `complete-${period}` }),
+    ).toHaveLength(0);
+    await press('counter');
+    expect(
+      tree.root.findByProps({ testID: `complete-${period}` }).props.children,
+    ).toBe('✓');
+    const other = period === 'morning' ? 'evening' : 'morning';
+    expect(
+      tree.root.findAllByProps({ testID: `complete-${other}` }),
+    ).toHaveLength(0);
+    expect(
+      tree.root.findByProps({ testID: 'dialog-title' }).props.children,
+    ).toBe('تم ورد اليوم');
+    await press('dialog-action-0');
+    await press(`period-${other}`);
+    await press(`period-${period}`);
+    await press('counter');
+    await press('theme-toggle');
+    expect(tree.root.findAllByProps({ testID: 'dialog-title' })).toHaveLength(
+      0,
+    );
+    act(() => tree.unmount());
+    await mount();
+    expect(
+      tree.root.findByProps({ testID: `complete-${period}` }),
+    ).toBeTruthy();
+    expect(tree.root.findAllByProps({ testID: 'dialog-title' })).toHaveLength(
+      0,
+    );
+  },
+);
+
+test('completing one dhikr does not finish a period with another incomplete count', async () => {
+  saved.morning = completeCounts('morning');
+  saved.morning[1] -= 1;
+  saved.morning[2] -= 1;
+  await mount();
+  await press('counter');
+  expect(tree.root.findAllByProps({ testID: 'complete-morning' })).toHaveLength(
+    0,
+  );
+  expect(tree.root.findAllByProps({ testID: 'dialog-title' })).toHaveLength(0);
+  await press('reading-card');
+  expect(tree.root.findByProps({ testID: 'complete-morning' })).toBeTruthy();
+  expect(tree.root.findByProps({ testID: 'dialog-title' }).props.children).toBe(
+    'تم ورد اليوم',
+  );
+});
+
+test('manual reset clears both completion marks and allows completing a period again', async () => {
+  saved.morning = completeCounts('morning');
+  saved.evening = completeCounts('evening');
+  await mount();
+  await press('reset');
+  await press('dialog-action-0');
+  expect(tree.root.findByProps({ testID: 'complete-morning' })).toBeTruthy();
+  expect(tree.root.findByProps({ testID: 'complete-evening' })).toBeTruthy();
+  await press('reset');
+  await press('dialog-action-1');
+  expect(tree.root.findAllByProps({ testID: 'complete-morning' })).toHaveLength(
+    0,
+  );
+  expect(tree.root.findAllByProps({ testID: 'complete-evening' })).toHaveLength(
+    0,
+  );
+  saved.morning = completeCounts('morning');
+  saved.morning[1] -= 1;
+  await press('theme-toggle');
+  await press('counter');
+  expect(tree.root.findByProps({ testID: 'dialog-title' }).props.children).toBe(
+    'تم ورد اليوم',
+  );
+});
+
+test('daily reset refreshed on resume clears both completion marks', async () => {
+  const listener = jest.mocked(AppState.addEventListener);
+  saved.morning = completeCounts('morning');
+  saved.evening = completeCounts('evening');
+  await mount();
+  expect(tree.root.findByProps({ testID: 'complete-morning' })).toBeTruthy();
+  expect(tree.root.findByProps({ testID: 'complete-evening' })).toBeTruthy();
+  saved.morning = {};
+  saved.evening = {};
+  const onChange = listener.mock.calls.find(
+    ([event]) => event === 'change',
+  )![1];
+  await act(async () => onChange('active'));
+  await flush();
+  expect(tree.root.findAllByProps({ testID: 'complete-morning' })).toHaveLength(
+    0,
+  );
+  expect(tree.root.findAllByProps({ testID: 'complete-evening' })).toHaveLength(
+    0,
+  );
+  expect(tree.root.findAllByProps({ testID: 'dialog-title' })).toHaveLength(0);
+});
+
+test('failed final increment does not mark the period complete', async () => {
+  saved.morning = completeCounts('morning');
+  saved.morning[1] -= 1;
+  NativeModules.AzkarDevice.increment.mockRejectedValueOnce(
+    new Error('save failed'),
+  );
+  await mount();
+  await press('counter');
+  expect(tree.root.findAllByProps({ testID: 'complete-morning' })).toHaveLength(
+    0,
+  );
+  expect(tree.root.findByProps({ testID: 'dialog-title' }).props.children).toBe(
+    'تعذر حفظ التغيير',
+  );
 });
